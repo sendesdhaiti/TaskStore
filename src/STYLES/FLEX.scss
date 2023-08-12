@@ -1,0 +1,22 @@
+.display_flex_justify_n_align_center_direction_row {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    flex-direction: row;
+}
+
+.display_flex_justify_n_align_center_direction_column{
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    flex-direction: column;
+}
+
+
+
+*{
+    justify-content: center;
+    align-content: center;
+    border: 1px dotted;
+}
+
