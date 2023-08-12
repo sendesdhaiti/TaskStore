@@ -1,0 +1,13 @@
+$background1: rgb(246, 233, 51);
+$background2: rgb(51, 184, 246);
+
+
+
+.background1{
+    @media screen and (max-width:500px) {
+        background-color: $background1;
+    }
+    @media screen and (min-width:500px) {
+        background-color: $background2;
+    }
+}
