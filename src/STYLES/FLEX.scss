@@ -1,4 +1,19 @@
+@import './MIXINS.scss';
+
+@mixin centerChildren_Flex{
+    
+    * {
+        display: inherit;
+        align-content: center;
+    }
+
+}
+
+.__centerChildren_Flex__{
+    @include centerChildren_Flex();
+}
 .display_flex_justify_n_align_center_direction_row {
+
     display: flex;
     justify-content: center;
     align-content: center;
@@ -10,8 +25,12 @@
     justify-content: center;
     align-content: center;
     flex-direction: column;
+    
 }
 
+.Column_to_Row_500px_width{
+    @include Column_to_Row_500px_width();
+}
 
 
 *{

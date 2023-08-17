@@ -1,0 +1,50 @@
+
+<div class="display_flex_justify_n_align_center_direction_column">
+    <button>Business Interest</button>
+    <button>General Contact</button>
+    <form class="display_flex_justify_n_align_center_direction_column" >
+        <h4>Express Interest in the Market Alert Business Team</h4>
+        <div class="display_flex_justify_n_align_center_direction_row" >
+            <p *ngIf="emailMsg" >{{emailMsg}}</p>
+            <input type="email" name="email" id="" placeholder="Enter your email..." required [(ngModel)]="Contact.email">
+        </div> 
+        <div class="display_flex_justify_n_align_center_direction_row" >
+            <p *ngIf="fnMsg" >{{fnMsg}}</p>
+            <input type="text" name="fn" id="" placeholder="Enter your first name..." required [(ngModel)]="Contact.fn">
+        </div> 
+        <div class="display_flex_justify_n_align_center_direction_row" >
+            <p *ngIf="lnMsg" >{{lnMsg}}</p>
+            <input type="text" name="ln" placeholder="Enter your last name..." required [(ngModel)]="Contact.ln">
+        </div> 
+        <div class="display_flex_justify_n_align_center_direction_row" >
+            <p *ngIf="noteMsg">{{noteMsg}}</p>
+            <input type="text" name="note" placeholder="How'd You Hear About Us?..." required [(ngModel)]="Contact.note">
+        </div> 
+
+        <div class="display_flex_justify_n_align_center_direction_row">
+            <u class="display_flex_justify_n_align_center_direction_column">By clicking send, you are choosing to aggree to our terms.</u>
+            <button class="btn1" type="button" (click)="sendBI()" >Send</button>
+        </div>
+    </form>
+
+    
+    <div *ngIf="sent != undefined" class="display_flex_justify_n_align_center_direction_row">
+        <div *ngIf="sent  == true;else notSent">
+            <p>Your message was sent successfully!</p>
+        </div>
+        <ng-template #notSent>
+            <p>Your message was not sent!</p>
+        </ng-template>
+    </div>
+
+    <!-- <form action="" name="GeneralContact" class="display_flex_justify_n_align_center_direction_column">
+        <h4>Contact Us</h4>
+        <input type="email" name="email" id="" placeholder="Enter your email..." required [(ngModel)]="Contact.email">
+        <input type="text" name="fn" id="" placeholder="Enter your first name..." required [(ngModel)]="Contact.fn">
+        <input type="text" name="ln" placeholder="Enter your last name..." required [(ngModel)]="Contact.ln">
+        <input type="text" name="note" placeholder="Quick note..." [(ngModel)]="Contact.note">
+        <div>
+            <input class="btn1" type="button" value="Send" (click)="sendGI()">
+        </div>
+    </form> -->
+</div>
