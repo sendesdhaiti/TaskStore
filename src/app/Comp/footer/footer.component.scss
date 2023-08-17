@@ -1,0 +1,9 @@
+div > * {
+    padding: 5px;
+    margin: 10px;
+}
+
+div >  div {
+    display: inherit;
+    flex-direction: column;
+}

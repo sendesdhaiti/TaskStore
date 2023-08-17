@@ -1,6 +1,25 @@
-<div class="display_flex_justify_n_align_center_direction_row">
-    <u>Home</u>
-    <u>Support</u>
-    <u>Login</u>
-    <u>About</u>
+<div class="display_flex_justify_n_align_center_direction_column flex-wrap">
+    <div >
+        <a routerLink="/">Home</a>
+    </div>
+    <div>
+        <a>Support</a>
+    </div>
+    <div>
+        <a>Login</a>
+    </div>
+    <div>
+        <a>About</a>
+    </div>
+    <div>
+        <a *ngFor="let c of buy" routerLink="/{{c.path}}">{{c.path | titlecase}}</a>
+    </div>
+
+    <div>
+        <a *ngFor="let c of sell" routerLink="/{{c.path}}">{{c.path | titlecase}}</a>
+    </div>
+
+    <div>
+        <a *ngFor="let c of contact" routerLink="/{{c.path}}">{{c.path | titlecase}}</a>
+    </div>
 </div>

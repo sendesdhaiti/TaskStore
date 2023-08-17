@@ -1,0 +1,17 @@
+@mixin Column_to_Row_500px_width{
+    @media screen and (max-width:500px) {
+        flex-direction: column;
+    }
+    @media screen and (min-width:500px) {
+        flex-direction: row;
+    }
+}
+
+@mixin Transition_2s{
+    @media screen and (max-width:500px) {
+        transition: 2s cubic-bezier(0.075, 0.82, 0.165, 1);
+    }
+    @media screen and (min-width:500px) {
+        transition: 2s cubic-bezier(0.1, 0.82, 0.165, 1);
+    }
+}

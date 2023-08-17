@@ -1,13 +1,49 @@
 $background1: rgb(246, 233, 51);
 $background2: rgb(51, 184, 246);
 
+$background3: rgb(69, 195, 60);
+$background4: rgb(251, 75, 196);
+@import './MIXINS.scss';
 
 
-.background1{
+
+@mixin Background1_to_2{
+    @include Transition_2s();
     @media screen and (max-width:500px) {
         background-color: $background1;
     }
     @media screen and (min-width:500px) {
         background-color: $background2;
     }
+}
+
+@mixin Background2_to_3{
+    @include Transition_2s();
+    @media screen and (max-width:500px) {
+        background-color: $background2;
+    }
+    @media screen and (min-width:500px) {
+        background-color: $background3;
+    }
+}
+
+@mixin Background1_to_4{
+    @include Transition_2s();
+    @media screen and (max-width:500px) {
+        background-color: $background1;
+    }
+    @media screen and (min-width:500px) {
+        background-color: $background4;
+    }
+}
+
+
+.background1 {
+    @include Background1_to_2();
+}
+.background2 {
+    @include Background2_to_3();
+}
+.background3 {
+    @include Background1_to_4();
 }
