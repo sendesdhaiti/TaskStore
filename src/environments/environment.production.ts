@@ -2,7 +2,7 @@ import { environment_dev as devenv } from "./environment.development";
 import { isDevMode } from '@angular/core';
 
 let env
-function set(){
+export function set(){
     if(isDevMode() == true){
         env = devenv.localhost_api
     }else{
