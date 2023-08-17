@@ -35,16 +35,13 @@ export class ContactComponent {
       &&  this.Contact.ln != undefined 
     ){
       this.data.setContact(this.Contact)
-      const s = this.data.__sendBI()?.subscribe(x=>{
+      const s = this.data.__sendBI().subscribe(x=>{
         console.log(x)
-      }, error=>{
-        console.log(error)
-
       })
       if(s){
         setTimeout(()=>{
           s.unsubscribe()
-        })
+        }, 10000)
       }
     }else{
       if(!ValidateEmail(this.Contact.email)){
