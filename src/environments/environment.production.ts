@@ -1,17 +1,8 @@
-import { environment_dev as devenv } from "./environment.development";
-import { isDevMode } from '@angular/core';
-
-let env
-export function set(){
-    if(isDevMode() == true){
-        env = devenv.localhost_api
-    }else{
-        env = devenv.prod_api
-    }
-    return env
-}
-export const environment_prod = {
-    "prod_api":set(),
+import env from './env.json';
+export const environment = {
+    "prod_api":env.dev.prod_api,
+    "localhost_api":env.dev.localhost_api,
+    "CryptKey": env.dev.CryptKey,
     "endpoints": {
         "Contact":"/api/Contact/",
         "Authentication":"/api/Authentication/",

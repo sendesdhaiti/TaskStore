@@ -9,6 +9,17 @@
 
 }
 
+.flex-wrap{
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+}
+
+.flex-direction-column{
+    flex-direction: column;
+}
+
+
 .__centerChildren_Flex__{
     @include centerChildren_Flex();
 }
@@ -24,6 +35,14 @@
     display: flex;
     justify-content: center;
     align-content: center;
+    flex-direction: column;
+    
+}
+
+.display_flex_justify_n_align_start_direction_column{
+    display: flex;
+    justify-content: start;
+    align-content: start;
     flex-direction: column;
     
 }

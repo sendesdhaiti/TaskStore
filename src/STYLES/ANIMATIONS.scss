@@ -1,0 +1,37 @@
+@mixin animate($animation, $duration, $method) {
+    animation: $animation $duration $method reverse;
+}
+
+@mixin keyframes($name) {
+    @keyframes #{$name} {
+        @content;
+    }
+}
+
+.hover-fade {
+    opacity: 1;
+    background-color: $background3;
+}
+
+.hover-fade:active {
+    position: relative;
+    padding: 1.5rem;
+    margin: auto;
+}
+
+.hover-fade:hover {
+
+    @include keyframes(fade) {
+        0% {
+            opacity: .5;
+            background-color: rgb(255, 255, 255);
+        }
+
+        100% {
+            opacity: 1;
+            background-color: $background3;
+        }
+    }
+
+    @include animate(fade, 1s, infinite);
+}

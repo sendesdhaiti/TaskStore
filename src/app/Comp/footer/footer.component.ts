@@ -8,10 +8,7 @@ import { TitleCasePipe } from '@angular/common';
   styleUrls: ['./footer.component.scss']
 })
 export class FooterComponent {
-  constructor(private titlecasePipe: TitleCasePipe) { 
-    console.log(JSON.stringify(buy))
-    console.log(JSON.stringify(sell))
-    console.log(JSON.stringify(contact))
+  constructor(private titlecasePipe: TitleCasePipe) {
   }
   buy = buy
   sell = sell
@@ -21,7 +18,7 @@ export class FooterComponent {
     if (!word) return word;
     return word[0].toUpperCase() + word.substr(1).toLowerCase();
   }
-  transformName(word:string) {
+  transformName(word: string) {
     return this.titlecasePipe.transform(word);
   }
 

@@ -30,11 +30,15 @@
     
     <div *ngIf="sent != undefined" class="display_flex_justify_n_align_center_direction_row">
         <div *ngIf="sent  == true;else notSent">
-            <p>Your message was sent successfully!</p>
+            <p>Your message was sent successfully! Check your email for more details and check back here to continue.</p>
         </div>
         <ng-template #notSent>
             <p>Your message was not sent!</p>
         </ng-template>
+    </div>
+
+    <div *ngIf="MAINMSG != undefined" class="display_flex_justify_n_align_center_direction_row">
+        <p>{{MAINMSG}}</p>
     </div>
 
     <!-- <form action="" name="GeneralContact" class="display_flex_justify_n_align_center_direction_column">
