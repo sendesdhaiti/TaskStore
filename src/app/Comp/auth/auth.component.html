@@ -1,0 +1,63 @@
+<form action="" class="display_flex_justify_n_align_center_direction_column " *ngIf="$Auth == 0">
+    <h1 class="margin-vertical">Login</h1>
+    <div class="margin-vertical Width-Percentage-30-to-80-Responsive display_flex_justify_n_align_center_direction_row flex-wrap">
+        <p class="margin-vertical"*ngIf="msgs.email">{{msgs.email}}</p>
+        <input type="email" name="email" id="" class="margin-vertical" placeholder="Enter your email..." required [(ngModel)]="Account.email">
+    </div>
+    <div class="margin-vertical Width-Percentage-30-to-80-Responsive display_flex_justify_n_align_center_direction_row flex-wrap">
+        <p class="margin-vertical"*ngIf="msgs.password">{{msgs.password}}</p>
+        <input type="password" name="password" id="" class="margin-vertical" placeholder="Enter your password*&%$..."
+            required [(ngModel)]="Account.password">
+    </div>
+    <div class="display_flex_justify_n_align_center_direction_row ">
+        <input type="submit" value="Sign in" class="margin-vertical Width-Percentage-30-to-80-Responsive btn1 hover-fade" (click)="login()">
+    </div>
+    <p class="margin-vertical" *ngIf="msgs.response">{{msgs.response}}</p>
+    <div class="margin-vertical Width-Percentage-30-to-80-Responsive display_flex_justify_n_align_center_direction_row flex-wrap">
+        <p>Don't have an account? Sign up <span><u (click)="changeTab(1)">here</u></span>.</p>
+    </div>
+</form>
+
+<form action="" class="display_flex_justify_n_align_center_direction_column " *ngIf="$Auth == 1">
+    <h1 class="margin-vertical">Register</h1>
+    <div class="margin-vertical Width-Percentage-30-to-80-Responsive display_flex_justify_n_align_center_direction_row flex-wrap">
+        <p class="margin-vertical"*ngIf="msgs.email">{{msgs.email}}</p>
+        <input type="email" name="email" id="" class="margin-vertical" placeholder="Enter your email..." required [(ngModel)]="Account.email">
+    </div>
+    <div class="margin-vertical Width-Percentage-30-to-80-Responsive display_flex_justify_n_align_center_direction_row flex-wrap">
+        <p class="margin-vertical"*ngIf="msgs.username">{{msgs.username}}</p>
+        <input type="text" name="username" id="" class="margin-vertical" placeholder="Enter your username..." required [(ngModel)]="Account.username">
+    </div>
+
+    <div class="margin-vertical Width-Percentage-30-to-80-Responsive display_flex_justify_n_align_center_direction_row flex-wrap">
+        <p class="margin-vertical"*ngIf="msgs.fn">{{msgs.fn}}</p>
+        <input type="text" name="fn" id="" class="margin-vertical" placeholder="Enter your first name..." required [(ngModel)]="Account.firstname">
+    </div>
+
+    <div class="margin-vertical Width-Percentage-30-to-80-Responsive display_flex_justify_n_align_center_direction_row flex-wrap">
+        <p class="margin-vertical"*ngIf="msgs.ln">{{msgs.ln}}</p>
+        <input type="text" name="ln" id="" class="margin-vertical" placeholder="Enter your last name..." required [(ngModel)]="Account.lastname">
+    </div>
+
+    <div class="margin-vertical Width-Percentage-30-to-80-Responsive display_flex_justify_n_align_center_direction_row flex-wrap">
+        <p class="margin-vertical"*ngIf="msgs.password">{{msgs.password}}</p>
+        <input type="password" name="password" id="" class="margin-vertical" placeholder="Enter your password*&%$..."
+            required [(ngModel)]="Account.password">
+    </div>
+    <div class="display_flex_justify_n_align_center_direction_row">
+        <input type="submit" value="Register" class="margin-vertical Width-Percentage-30-to-80-Responsive btn1 hover-fade" (click)="register()">
+    </div>
+    <p class="margin-vertical"*ngIf="msgs.response">{{msgs.response}}</p>
+    <div class="margin-vertical Width-Percentage-30-to-80-Responsive display_flex_justify_n_align_center_direction_row flex-wrap">
+        <p>Already have an account? Sign in <span><u (click)="changeTab(0)">here</u></span>.</p>
+    </div>
+</form>
+
+<div class="display_flex_justify_n_align_center_direction_column " *ngIf="$Auth == 2">
+    <h1 class="margin-vertical">Are you sure you want to log out?</h1>
+    <div class="margin-vertical Width-Percentage-30-to-80-Responsive display_flex_justify_n_align_center_direction_row flex-wrap">
+        <button class="margin-vertical btn1 hover-fade" (click)="backToHome()">Go Back</button>
+        <button class="margin-vertical btn1 hover-fade" (click)="logOut()">Yes</button>
+    </div>
+    <p class="margin-vertical"*ngIf="msgs.response">{{msgs.response}}</p>
+</div>

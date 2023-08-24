@@ -2,3 +2,10 @@
 @import './STYLES/FLEX.scss';
 @import './STYLES/COLORS.scss';
 @import './STYLES/__buttons.scss';
+@import './STYLES/ANIMATIONS.scss';
+@import './STYLES/MIXINS.scss';
+@import './STYLES/GENERAL.scss';
+
+body{
+    background-color: $background5;
+}

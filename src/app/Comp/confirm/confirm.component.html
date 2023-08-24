@@ -1,0 +1,83 @@
+<form class="display_flex_justify_n_align_center_direction_column ">
+    <p class=" display_flex_justify_n_align_center_direction_row margin-vertical flex-wrap word-break">Welcome back
+        {{email | slice:0:100}}</p>
+    <!-- <div class="  margin-vertical">
+    </div> -->
+    <div id="verify" class="display_flex_justify_n_align_center_direction_column margin-vertical ">
+        <p class="">Enter the code sent to your email to verify your email and continue.</p>
+        <input class=" margin-vertical" type="number" placeholder="Enter code from email..." min="100000" max="999999"
+            required style="width: 10em;" [(ngModel)]="code" name="code">
+        <div class="display_flex_justify_n_align_center_direction_row margin-horizontal ">
+
+            <button class=" btn1 hover-fade" type="button" (click)="verify()">Verify</button>
+        </div>
+
+        <div>
+            <button (click)="newCode()">New Code</button>
+        </div>
+
+        <p *ngIf="newcodeResponses.length > 1">
+            {{newcodeResponses[1]}}
+        </p>
+    </div>
+
+    <div id="confirm">
+        <p class="display_flex_justify_n_align_center_direction_row">Please confirm that you will be attending the
+            meeting at one of the times below</p>
+        <div *ngIf="confirm == true;else notConf"
+            class="Column_to_Row_500px_width display_flex_justify_n_align_center_direction_row">
+            <p>I am coming to the meeting:
+                <span><u>{{confirm}}</u> <input type="checkbox" name="confirm" id="" [(ngModel)]="confirm"
+                        (change)="changeDate(confirm)"></span>
+            </p>
+
+
+            <div *ngIf="$MeetingTimes | async as MeetingTimes">
+                <div *ngIf="MeetingTimes.length > 0;else noMeetingTimes">
+                    <div class="display_flex_justify_n_align_center_direction_column margin-10px padding-5px border-radius6"
+                        *ngFor="let mt of MeetingTimes">
+                        <h3>Meeting Time</h3>
+                        <p>Meeting ID: <span><b class="word-break">{{mt.id}}</b></span></p>
+                        <p>Timezone: <span><b>{{mt.timezone}}</b></span></p>
+                        <p>Url: <span><b><u>{{mt.url}}</u></b></span></p>
+                        <p>Host: <span><b>{{mt.host}}</b></span></p>
+                        <p>Frequency: <span><select name="frq" disabled >
+                                    <option [value]="mt.frequency">{{mt.frequency}}</option>
+                                </select></span></p>
+                        <p>Scheduled Date: <span><b>{{mt.day}} {{mt.time}}</b></span></p>
+                        <div class="display_flex_justify_n_align_center_direction_row flex-wrap" *ngIf="confirm">
+                            <p>Add the time from one of the meetings that you can make.</p>
+                            <input #t type="datetime-local" name="date" id="" [(ngModel)]="date" (change)="updateConfirmationtime(t.value, mt)">
+                        </div>
+                        <p>Date Added: <span><b>{{mt.added}}</b></span></p>
+                        <p>Date Modified: <span><b>{{mt.updated}}</b></span></p>
+                        <p>Created By: <span><b class="word-break">{{mt.creator}}</b></span></p>
+                    </div>
+                </div>
+                <ng-template #noMeetingTimes>
+                    <h3>There are no meeting times available.</h3>
+                </ng-template>
+
+            </div>
+
+        </div>
+        <ng-template #notConf class=" ">
+            <p class=" display_flex_justify_n_align_center_direction_row">Not yet: <span><u>{{confirm}}</u> <input
+                        type="checkbox" name="confirm" id="" [(ngModel)]="confirm"></span></p>
+        </ng-template>
+        
+        <div class="display_flex_justify_n_align_center_direction_row flex-wrap">
+            <button class="display_flex_justify_n_align_center_direction_row" (click)="sendConfirmation()">Send
+                Confirmation</button>
+
+        </div>
+    </div>
+
+    <div *ngIf="response.length > 1" class="display_flex_justify_n_align_center_direction_row">
+        <p>Your confirmation has been sent as <span> <b>{{response[0]}}</b> </span></p>
+        <div>
+            {{response[1]}}
+        </div>
+    </div>
+
+</form>

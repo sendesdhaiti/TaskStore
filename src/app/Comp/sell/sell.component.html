@@ -1,1 +1,231 @@
-<p>sell works!</p>
+
+<div class="display_flex_justify_n_align_center_direction_column" *ngIf="$Account | async as acc">
+    <div class="display_flex_justify_n_align_center_direction_column margin-10px border-radius5">
+        
+        <div class="display_flex_justify_n_align_center_direction_column margin-vertical">
+            <h3 class="margin-10px" *ngIf="editingAccount == false;else editusername">{{acc.username}}'s back-office</h3>
+            <ng-template #editusername>
+                <p>New username</p>
+                <input type="text" name="username" id="" placeholder="Enter new Username"
+                    [(ngModel)]="edittedAccount.username" (change)="__checkUsername()">
+                <div *ngIf="edittedAccountMsgs.usernameGood != undefined"
+                    class="display_flex_justify_n_align_center_direction_row flex-wrap">
+                    <img style="width: 1em;" src="./../../../assets/ICONS/check.svg"
+                        *ngIf="edittedAccountMsgs.usernameGood == true;else usernameNotGood" alt="">
+                    <ng-template #usernameNotGood>
+                        <img style="width: 1em;" src="./../../../assets/ICONS/ban_wrong_sign.svg" alt="">
+                    </ng-template>
+    
+                </div>
+                <!-- <p *ngIf="edittedAccountMsgs.username">{{edittedAccountMsgs.username}}</p> -->
+            </ng-template>
+        </div>
+
+        <div class="display_flex_justify_n_align_center_direction_column flex-wrap margin-vertical">
+            <div class="display_flex_justify_n_align_center_direction_row margin-vertical">
+                <button class="btn1 hover-fade " *ngIf="editingAccount == false; else edittingEmail"
+                    (click)="_editingAccount()">Edit</button>
+            </div>
+            <ng-template #edittingEmail>
+                <div class="display_flex_justify_n_align_center_direction_row flex-wrap">
+                    <input type="email" name="email" placeholder="Enter your new email..." id="" (change)="__checkEmail()"
+                        [(ngModel)]="edittedAccount.email">
+                    <div *ngIf="edittedAccountMsgs.emailGood != undefined">
+                        <img style="width: 1em;" src="./../../../assets/ICONS/check.svg"
+                            *ngIf="edittedAccountMsgs.emailGood == true;else emailNotGood" alt="">
+                        <ng-template #emailNotGood>
+                            <img style="width: 1em;" src="./../../../assets/ICONS/ban_wrong_sign.svg" alt="">
+                        </ng-template>
+                    </div>
+                </div>
+
+
+                <div>
+                    <div>
+                        <input type="password" name="password" id="" placeholder="Enter password#$%*...">
+                        <div *ngIf="edittedAccountMsgs.passwordGood != undefined">
+                            <img style="width: 1em;" src="./../../../assets/ICONS/check.svg"
+                                *ngIf="edittedAccountMsgs.passwordGood == true;else passwordNotGood" alt="">
+                            <ng-template #passwordNotGood>
+                                <img style="width: 1em;" src="./../../../assets/ICONS/ban_wrong_sign.svg" alt="">
+                            </ng-template>
+                        </div>
+                    </div>
+                    <div>
+                        <input type="password" name="re_password" id="" placeholder="Re-enter password#$%*...">
+                    </div>
+                    <div class="display_flex_justify_n_align_center_direction_column">
+                        <p *ngIf="edittedAccountMsgs.password">{{edittedAccountMsgs.password}}</p>
+                    </div>
+                </div>
+    
+                <div class="display_flex_justify_n_align_center_direction_column">
+                    <p *ngIf="edittedAccountMsgs.email">{{edittedAccountMsgs.email}}</p>
+                </div>
+            </ng-template>
+    
+            
+        </div>
+    
+        <div class="display_flex_justify_n_align_center_direction_row flex-wrap">
+            <img class="margin-vertical" src="./../../../assets/MS/dfts2.png" style="height: 10rem; max-width: 10rem;"
+                alt="">
+        </div>
+        <div class="display_flex_justify_n_align_center_direction_row flex-wrap" *ngIf="editingAccount == true">
+            <button class="btn1 hover-fade" (click)="__updateAccount()">Update Account</button>
+        </div>
+    
+    </div>
+
+    <div class="display_flex_justify_n_align_center_direction_row flex-wrap ">
+        <!-- my meeting times made -->
+        <div *ngIf="MyMeetingTimes | async as mytimes">
+            <div *ngIf="mytimes;else nomytimes">
+                <div class="display_flex_justify_n_align_center_direction_column margin-10px padding-5px border-radius6"
+                    *ngFor="let mt of mytimes">
+                    <p>Meeting ID: <span><b class="word-break">{{mt.id}}</b></span></p>
+                    <p>Timezone: <span><b>{{mt.timezone}}</b></span></p>
+                    <p>Url: <span><b><u>{{mt.url}}</u></b></span></p>
+                    <p>Host: <span><b>{{mt.host}}</b></span></p>
+                    <p>Frequency: <span><select name="" disabled [(ngModel)]="mt.frequency">
+                                <option value="0">One Time</option>
+                                <option value="1">Daily</option>
+                                <option value="2">Weekly</option>
+                                <option value="3">Bi-Weekly</option>
+                                <option value="4">Monthly</option>
+                                <option value="5">Yearly</option>
+                            </select></span></p>
+                    <p>Scheduled Date: <span><b>{{mt.day}} {{mt.time}}</b></span></p>
+                    <p>Date Added: <span><b>yesterday at 7am</b></span></p>
+                    <p>Date Modified: <span><b>yesterday at 8am</b></span></p>
+                    <p>Created By: <span><b class="word-break">Sendes</b></span></p>
+                </div>
+
+                
+            </div>
+            <ng-template #nomytimes>
+                <p>You do not have any registered Meeting Times yet.</p>
+            </ng-template>
+        </div>
+
+        <div *ngIf="MeetingTimes.length > 0;else noMeetingTimes">
+            <div class="display_flex_justify_n_align_center_direction_column margin-10px padding-5px border-radius6"
+                *ngFor="let mt of MeetingTimes">
+                <h3>Meeting Ready To Upload</h3>
+                <p>Meeting ID: <span><b class="word-break">{{mt.id}}</b></span></p>
+                <p>Timezone: <span><b>{{mt.timezone}}</b></span></p>
+                <p>Url: <span><b><u>{{mt.url}}</u></b></span></p>
+                <p>Host: <span><b>{{mt.host}}</b></span></p>
+                <p>Frequency: <span><select name="" disabled [(ngModel)]="mt.frequency">
+                            <option value="0">One Time</option>
+                            <option value="1">Daily</option>
+                            <option value="2">Weekly</option>
+                            <option value="3">Bi-Weekly</option>
+                            <option value="4">Monthly</option>
+                            <option value="5">Yearly</option>
+                        </select></span></p>
+                <p>Scheduled Date: <span><b>{{mt.day}} {{mt.time}}</b></span></p>
+                <p>Date Added: <span><b>yesterday at 7am</b></span></p>
+                <p>Date Modified: <span><b>yesterday at 8am</b></span></p>
+                <p>Created By: <span><b>Sendes</b></span></p>
+            </div>
+
+            <div class="display_flex_justify_n_align_center_direction_row margin-10px">
+                <button class="btn1 hover-fade" (click)="uploadMeetingTimes()">Upload Meeting Times</button>
+            </div>
+
+            <div class="display_flex_justify_n_align_center_direction_row margin-10px" *ngIf="edittedAccountMsgs.uploadedMsg">
+                <p>{{edittedAccountMsgs.uploadedMsg}}</p>
+            </div>
+        </div>
+        <ng-template #noMeetingTimes>
+            <h3>You do not have any Meeting Times set to upload.</h3>
+        </ng-template>
+    </div>
+
+    <div class="display_flex_justify_n_align_center_direction_column">
+        <!-- add meeting time -->
+        <div class="display_flex_justify_n_align_center_direction_row flex-wrap " *ngIf="">
+            <button class="btn1 hover-fade" [(ngModel)]="msgs.showingAddMeeting"
+                *ngIf="acc.verified ;else notshowingAddMeeting"
+                (click)="AddMeetingFormProcess(['newMeetingForm', '_host'],['_howoften', '_date', '_url', '_terms'])">Add
+                new meeting
+                time</button>
+            <ng-template #notshowingAddMeeting>
+                <h4>You must have a verified account to register new meeting times.</h4>
+                <button class="btn1 hover-fade" disabled>Add new meeting
+                    time</button>
+            </ng-template>
+        </div>
+        <form id="newMeetingForm"
+            class="display_flex_justify_n_align_center_direction_column margin-10px border-radius5 ">
+            <div class="display_flex_justify_n_align_center_direction_column margin-vertical">
+                <h1>Adding Meeting Time</h1>
+            </div>
+
+            <div id="_host" class="display_flex_justify_n_align_center_direction_column margin-vertical">
+                <label for="">Who will host this meeting?</label>
+                <input type="text" placeholder="Host Name..." name="host" [(ngModel)]="MeetingTime.host">
+                <button (click)="AddMeetingFormProcess(['_howoften'],[''])">add</button>
+            </div>
+
+            <div id="_howoften" class="display_flex_justify_n_align_center_direction_column margin-vertical">
+                <label for="">How often will this meeting run?</label>
+                <select name="" name="howoften" [(ngModel)]="MeetingTime.frequency">
+                    <option value="0">One Time</option>
+                    <option value="1">Daily</option>
+                    <option value="2">Weekly</option>
+                    <option value="3">Bi-Weekly</option>
+                    <option value="4">Monthly</option>
+                    <option value="5">Yearly</option>
+                </select>
+                <button (click)="AddMeetingFormProcess(['_date'],[''])">add</button>
+            </div>
+
+            <div id="_date" class="display_flex_justify_n_align_center_direction_column margin-vertical">
+                <label for="">When is the meeting held?</label>
+                <input type="text" #_date_day_ id="" placeholder="Days...." name="_date_day"
+                    [(ngModel)]="MeetingTime.day">
+                <input type="text" #_date_time_ placeholder="Times held...." name="_date_time"
+                    [(ngModel)]="MeetingTime.time">
+                <button (click)="AddMeetingFormProcess(['_timezone'],[''])">add</button>
+            </div>
+
+            <div id="_timezone" class="display_flex_justify_n_align_center_direction_column margin-vertical">
+                <label for="">What is this meeting's timezone?</label>
+                <input type="text" placeholder="Meeting Name Timezone..." name="timezone"
+                    [(ngModel)]="MeetingTime.timezone">
+                <button (click)="AddMeetingFormProcess(['_url'],[''])">add</button>
+            </div>
+
+            <div id="_url" class="display_flex_justify_n_align_center_direction_column margin-vertical">
+                <label for="">Whats the meeting's url address?</label>
+                <input type="text" placeholder="Meeting Address..." name="url" [(ngModel)]="MeetingTime.url">
+                <button (click)="AddMeetingFormProcess(['_terms'],[''])">add</button>
+            </div>
+
+            <div id="_terms" class="display_flex_justify_n_align_center_direction_row margin-horizontal">
+                <label for="">You must review and accept our <u class="hover-fade">terms</u> before continuing.</label>
+                <input type="checkbox" placeholder="" name="terms" [(ngModel)]="msgs.terms">
+            </div>
+
+            <div class="display_flex_justify_n_align_center_direction_column margin-vertical">
+                <button (click)="addMeetingTime()" *ngIf="msgs.terms;else noTerms">Add</button>
+                <ng-template #noTerms>
+                    <button disabled>Add</button>
+                </ng-template>
+            </div>
+
+            <div class="display_flex_justify_n_align_center_direction_row margin-vertical" *ngIf="msgs.addMeetingTime">
+                <p>{{msgs.addMeetingTime}}</p>
+            </div>
+        </form>
+    </div>
+
+    <div>
+        <Button (click)="__deleteAccount()">Delete My Account</Button>
+
+    </div>
+
+
+</div>

@@ -1,4 +1,6 @@
-export const environment_dev = {
-    "localhost_api":"http://localhost:5221/",
-    "prod_api":"https://msp-acn-95049c5610c4.herokuapp.com/"
+import env from './env.json';
+export const environment = {
+    "localhost_api":env.dev.localhost_api,
+    "prod_api":env.dev.prod_api,
+    "CryptKey": env.dev.CryptKey,
 };

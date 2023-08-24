@@ -26,7 +26,7 @@ export class ContactComponent {
   fnMsg?:string
   lnMsg?:string
   noteMsg?:string
-
+  MAINMSG?:string
   
   sendBI(){
     if(
@@ -37,10 +37,14 @@ export class ContactComponent {
       this.data.setContact(this.Contact)
       const s = this.data.__sendBI().subscribe(x=>{
         console.log(x)
+        this.sent = x[0]
+        this.MAINMSG = x[1]
+        
       })
       if(s){
         setTimeout(()=>{
           s.unsubscribe()
+          this.MAINMSG = undefined
         }, 10000)
       }
     }else{

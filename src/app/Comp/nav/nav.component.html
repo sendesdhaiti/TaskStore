@@ -1,8 +1,30 @@
-<div class="display_flex_justify_n_align_center_direction_row">
-    <button class="btn1"><u>Home</u></button>
-    <button class="btn1"><u>Browse</u></button>
-    <button class="btn1"><u>Login</u></button>
-    <div>
-        <img src="./../../../assets/ICONS/cart.svg" style="width: 1.5rem; border: .5px solid; border-radius: 1rem; padding: 1rem; margin: 10px;" alt="">
+<div class="display_flex_justify_n_align_center_direction_row flex-wrap">
+    
+    <div class="display_flex_justify_n_align_center_direction_row " routerLink="/">
+        <img class="hover-fade" src="./../../../assets/MS/MSLogo.png"  style="width:5rem;">
+    </div>
+
+    <div class="display_flex_justify_n_align_center_direction_row flex-wrap" routerLink="/login">
+        <button class="btn1 hover-fade"><u>Login</u></button>
+    </div>
+    <div class="display_flex_justify_n_align_center_direction_row flex-wrap" routerLink="/cart">
+        <img class="hover-fade" src="./../../../assets/ICONS/cart.svg" style="width: 1.5rem;
+        border: .5px solid;
+        border-radius: 1rem;
+        padding: .5rem;
+        margin: 10px;
+        position: relative;
+        top: 16%;" alt="">
+        <p style="display: flex;
+        justify-content: center;
+        position: relative;
+        top: -10%;
+        left: 30%;
+        margin: 0;
+        border-radius: 1rem;
+        width: max-content;
+        padding: 0 8%;
+        background-color: red;
+        border: 1px solid;">1</p>
     </div>
 </div>

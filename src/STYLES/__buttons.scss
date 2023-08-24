@@ -1,13 +1,14 @@
 @import './MIXINS.scss';
 @import './COLORS.scss';
-
+@import './GENERAL.scss';
 .btn1{
     @include Transition_2s();
     @include Background2_to_3();
     background-color: black;
     color: yellow;
-    padding: 1rem;
+    padding: 0.5rem;
     margin: 10px;
+    width: 100%;
     border: 1px solid ;
     border-radius: 1rem;
 }

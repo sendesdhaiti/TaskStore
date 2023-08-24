@@ -1,0 +1,85 @@
+@import './MIXINS.scss';
+
+@mixin border-radius-and-background($color, $border-radius){
+    background-color: $color;
+    border-radius: $border-radius;
+}
+
+.word-break{
+    word-break: break-word
+}
+
+.border-radius1{
+    @include border-radius-and-background($background1, 1rem);
+}
+.border-radius2{
+    @include border-radius-and-background($background2, 1rem);
+}
+
+.border-radius3{
+    @include border-radius-and-background($background3, 1rem);
+}
+
+.border-radius4{
+    @include border-radius-and-background($background4, 1rem);
+}
+
+.border-radius5{
+    @include border-radius-and-background($background5, 1rem);
+}
+
+.border-radius6{
+    @include border-radius-and-background($background6, 1rem);
+}
+
+.margin-10px{
+    margin: 10px;
+}
+.margin-horizontal{
+    margin:auto 5px auto 5px  ;
+}
+
+.margin-vertical{
+    margin: 5px auto 5px auto ;
+}
+@mixin padding-rem($size){
+    padding: $size;
+}
+.padding-5px{
+    @include padding-rem(5px);
+}
+
+.padding-horizontal{
+    padding:auto 5px auto 5px  ;
+}
+
+.padding-vertical{
+    padding: 5px auto 5px auto ;
+}
+
+
+.width-auto{
+    min-width: 80%;
+}
+
+@mixin Width-Responsive($max-width, $min-width){
+    @include Transition_2s();
+    @media screen and (max-width:500px) {
+        width: $max-width;
+        
+    }
+    @media screen and (min-width:500px) {
+        width: $min-width;
+    }
+}
+
+.Width-Percentage-30-to-80-Responsive{
+    @include Width-Responsive(80%, 30%);
+}
+
+.img-border{
+    border-radius: 10rem;
+}
+input{
+    max-width: 90%;
+}
