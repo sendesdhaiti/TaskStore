@@ -3,15 +3,6 @@
         <a routerLink="/">Home</a>
     </div>
     <div class="display_flex_justify_n_align_center_direction_column flex-wrap">
-        <a>Support</a>
-    </div>
-    <div class="display_flex_justify_n_align_center_direction_column flex-wrap">
-        <a>Login</a>
-    </div>
-    <div class="display_flex_justify_n_align_center_direction_column flex-wrap">
-        <a>About</a>
-    </div>
-    <div class="display_flex_justify_n_align_center_direction_column flex-wrap">
         <a *ngFor="let c of buy" routerLink="/{{c.path}}">{{c.path | titlecase}}</a>
     </div>
 

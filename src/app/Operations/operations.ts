@@ -12,7 +12,6 @@ export class NextFormProcess implements INextFormProcess {
 
 
      nextFormInputProcess(names: string[], processAction: string) {
-        console.log(names)
         const p = processAction.toLowerCase()
         if (names.length > 0) {
             if (p == "hide") {
@@ -25,6 +24,7 @@ export class NextFormProcess implements INextFormProcess {
                         }, this.setTime)
                     }
                 })
+                return 0
             } else {
                 names.forEach(name => {
                     const e = document.getElementById(name)
@@ -35,8 +35,10 @@ export class NextFormProcess implements INextFormProcess {
                         }, this.setTime)
                     }
                 })
+                return 1
             }
         }
+        return -1
     }
 }
 

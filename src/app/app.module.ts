@@ -19,6 +19,9 @@ import { isDevMode } from '@angular/core';
 import { AuthComponent } from './Comp/auth/auth.component';
 import { HomeComponent } from './Comp/home/home.component';
 import { Account } from './Services/auth.service';
+import { JwtModule } from '@auth0/angular-jwt';
+import { AuthGuard } from './Guards/auth.guard';
+import { MyConfirmationsComponent } from './Comp/my-confirmations/my-confirmations.component';
 /**
  * 
  * @returns gets the 
@@ -33,6 +36,14 @@ export function set() {
   return _env
 }
 
+/**
+ * Gets the jwt from storage
+ * @returns void
+ */
+export function tokenGetter() { 
+  return localStorage.getItem("jwt"); 
+}
+
 
 @NgModule({
   declarations: [
@@ -45,15 +56,23 @@ export function set() {
     ConfirmComponent,
     AuthComponent,
     HomeComponent,
+    MyConfirmationsComponent,
 
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: tokenGetter,
+        allowedDomains: [set()],
+        disallowedRoutes: []
+      }
+    })
   ],
-  providers: [TitleCasePipe, HttpClient, MSEncrypt, logGapFormat, Account, NextFormProcess,
+  providers: [TitleCasePipe, HttpClient, MSEncrypt, logGapFormat, Account, NextFormProcess, AuthGuard,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: MonitorInterceptor,

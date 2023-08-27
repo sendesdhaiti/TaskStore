@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Account } from 'src/app/Services/auth.service';
-import { MeetingTime } from 'src/app/Services/contact.service';
+import { MeetingFrequency, MeetingTime } from 'src/app/Services/contact.service';
 import { DataService } from 'src/app/Services/data.service';
 import { ValidateEmail } from '../contact/contact.component';
 
@@ -175,22 +175,19 @@ export class SellComponent implements OnInit {
     this.data.StartNextFormProcess(show, hide)
   }
   addMeetingTime() {
-    console.log(this.msgs)
-    console.log(this.MeetingTime)
     if (this.Account) {
       const a = this.data.GETACCOUNT_VAL()
       if (a) {
         this.MeetingTime.creator = this.data.encrypt.encrypt(a.email)
         const c = this.MeetingTimes.find(t => {
           const c = t.day == this.MeetingTime.day && t.time == this.MeetingTime.time
-          console.log(c)
           return c;
         })
         if (c) {
           this.msgs.addMeetingTime = `${this.MeetingTime.day} at ${this.MeetingTime.time} was added already.`
         } else {
           this.MeetingTimes.push(this.MeetingTime)
-          this.MeetingTime = {}
+          this.MeetingTime = {frequency:MeetingFrequency.Daily}
         }
       }
     }
@@ -203,7 +200,7 @@ export class SellComponent implements OnInit {
         if (x) {
           this.edittedAccountMsgs.uploaded = x[0]
           this.edittedAccountMsgs.uploadedMsg = x[1]
-          for (let i = 0; i < this.MeetingTimes.length - 1; i++) {
+          for (let i = 0; i < this.MeetingTimes.length -1; i++) {
             this.MeetingTimes.pop()
           }
         } else {
@@ -211,7 +208,6 @@ export class SellComponent implements OnInit {
           this.edittedAccountMsgs.uploadedMsg = "Saving the Meeting Times did not complete successfully."
         }
       }, e => {
-        console.log(e)
         this.edittedAccountMsgs.uploaded = false
         this.edittedAccountMsgs.uploadedMsg = "Your request could not be sent."
       })
@@ -220,7 +216,7 @@ export class SellComponent implements OnInit {
         setTimeout(() => {
           c.unsubscribe()
           if (this.edittedAccountMsgs.uploaded == true) {
-            this.MyMeetingTimes = this.data.__getMeetingTimes(email, false )
+            this.MyMeetingTimes = this.data.__getMeetingTimes(email, false,"" )
           }
 
           setTimeout(() => {
@@ -240,7 +236,7 @@ export class SellComponent implements OnInit {
       }
     })
     var email = this.data.encrypt.encrypt(this.Account?.email ?? "")
-    this.MyMeetingTimes = this.data.__getMeetingTimes(email, false)
+    this.MyMeetingTimes = this.data.__getMeetingTimes(email, false, "")
     this.AddMeetingFormProcess(['newMeetingForm', '_host'], ['_howoften', '_date', '_url', '_terms'])
   }
 
