@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { buy, sell, contact } from 'src/app/app-routing.module';
 import { TitleCasePipe } from '@angular/common';
+import { Routes } from '@angular/router';
 // import { titleCaseWord } from 'src/app/app.component';
 @Component({
   selector: 'app-footer',
@@ -12,7 +13,18 @@ export class FooterComponent {
   }
   buy = buy
   sell = sell
-  contact = contact
+  contact_excluded = ["my-confirmations/:user", "verify/:user/:pageType", "confirm/:user"]
+  contact = this.filter(contact, this.contact_excluded)
+  filter(l: Routes, excl: string[]) {
+    l = l.filter(function (item) {
+      for (var key in excl) {
+        if (item.path?.toLowerCase() === excl[key].toLowerCase())
+          return false;
+      }
+      return true;
+    });
+    return l
+  }
 
   titleCaseWord(word: string) {
     if (!word) return word;

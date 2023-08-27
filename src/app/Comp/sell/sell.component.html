@@ -1,9 +1,9 @@
-
 <div class="display_flex_justify_n_align_center_direction_column" *ngIf="$Account | async as acc">
     <div class="display_flex_justify_n_align_center_direction_column margin-10px border-radius5">
-        
+
         <div class="display_flex_justify_n_align_center_direction_column margin-vertical">
-            <h3 class="margin-10px" *ngIf="editingAccount == false;else editusername">{{acc.username}}'s back-office</h3>
+            <h3 class="margin-10px" *ngIf="editingAccount == false;else editusername">{{acc.username}}'s back-office
+            </h3>
             <ng-template #editusername>
                 <p>New username</p>
                 <input type="text" name="username" id="" placeholder="Enter new Username"
@@ -15,7 +15,7 @@
                     <ng-template #usernameNotGood>
                         <img style="width: 1em;" src="./../../../assets/ICONS/ban_wrong_sign.svg" alt="">
                     </ng-template>
-    
+
                 </div>
                 <!-- <p *ngIf="edittedAccountMsgs.username">{{edittedAccountMsgs.username}}</p> -->
             </ng-template>
@@ -28,8 +28,8 @@
             </div>
             <ng-template #edittingEmail>
                 <div class="display_flex_justify_n_align_center_direction_row flex-wrap">
-                    <input type="email" name="email" placeholder="Enter your new email..." id="" (change)="__checkEmail()"
-                        [(ngModel)]="edittedAccount.email">
+                    <input type="email" name="email" placeholder="Enter your new email..." id=""
+                        (change)="__checkEmail()" [(ngModel)]="edittedAccount.email">
                     <div *ngIf="edittedAccountMsgs.emailGood != undefined">
                         <img style="width: 1em;" src="./../../../assets/ICONS/check.svg"
                             *ngIf="edittedAccountMsgs.emailGood == true;else emailNotGood" alt="">
@@ -58,15 +58,15 @@
                         <p *ngIf="edittedAccountMsgs.password">{{edittedAccountMsgs.password}}</p>
                     </div>
                 </div>
-    
+
                 <div class="display_flex_justify_n_align_center_direction_column">
                     <p *ngIf="edittedAccountMsgs.email">{{edittedAccountMsgs.email}}</p>
                 </div>
             </ng-template>
-    
-            
+
+
         </div>
-    
+
         <div class="display_flex_justify_n_align_center_direction_row flex-wrap">
             <img class="margin-vertical" src="./../../../assets/MS/dfts2.png" style="height: 10rem; max-width: 10rem;"
                 alt="">
@@ -74,7 +74,7 @@
         <div class="display_flex_justify_n_align_center_direction_row flex-wrap" *ngIf="editingAccount == true">
             <button class="btn1 hover-fade" (click)="__updateAccount()">Update Account</button>
         </div>
-    
+
     </div>
 
     <div class="display_flex_justify_n_align_center_direction_row flex-wrap ">
@@ -96,12 +96,12 @@
                                 <option value="5">Yearly</option>
                             </select></span></p>
                     <p>Scheduled Date: <span><b>{{mt.day}} {{mt.time}}</b></span></p>
-                    <p>Date Added: <span><b>yesterday at 7am</b></span></p>
-                    <p>Date Modified: <span><b>yesterday at 8am</b></span></p>
-                    <p>Created By: <span><b class="word-break">Sendes</b></span></p>
+                    <p>Date Added: <span><b>{{mt.added | date: 'MMM d, y, h:mm:ss a'}}</b></span></p>
+                    <p>Date Modified: <span><b>{{mt.updated | date: 'MMM d, y, h:mm:ss a'}}</b></span></p>
+                    <p>Created By: <span><b class="word-break">{{mt.creator}}</b></span></p>
                 </div>
 
-                
+
             </div>
             <ng-template #nomytimes>
                 <p>You do not have any registered Meeting Times yet.</p>
@@ -125,16 +125,17 @@
                             <option value="5">Yearly</option>
                         </select></span></p>
                 <p>Scheduled Date: <span><b>{{mt.day}} {{mt.time}}</b></span></p>
-                <p>Date Added: <span><b>yesterday at 7am</b></span></p>
-                <p>Date Modified: <span><b>yesterday at 8am</b></span></p>
-                <p>Created By: <span><b>Sendes</b></span></p>
+                <p>Date Added: <span><b>{{mt.added | date:'mm/dd/yyy hh:mm:ss'}}</b></span></p>
+                <p>Date Modified: <span><b>{{mt.updated | date:'mm/dd/yyy hh:mm:ss'}}</b></span></p>
+                <p>Created By: <span><b class="word-break">{{mt.creator}}</b></span></p>
             </div>
 
             <div class="display_flex_justify_n_align_center_direction_row margin-10px">
                 <button class="btn1 hover-fade" (click)="uploadMeetingTimes()">Upload Meeting Times</button>
             </div>
 
-            <div class="display_flex_justify_n_align_center_direction_row margin-10px" *ngIf="edittedAccountMsgs.uploadedMsg">
+            <div class="display_flex_justify_n_align_center_direction_row margin-10px"
+                *ngIf="edittedAccountMsgs.uploadedMsg">
                 <p>{{edittedAccountMsgs.uploadedMsg}}</p>
             </div>
         </div>
@@ -165,8 +166,9 @@
 
             <div id="_host" class="display_flex_justify_n_align_center_direction_column margin-vertical">
                 <label for="">Who will host this meeting?</label>
-                <input type="text" placeholder="Host Name..." name="host" [(ngModel)]="MeetingTime.host">
-                <button (click)="AddMeetingFormProcess(['_howoften'],[''])">add</button>
+                <input type="text" placeholder="Host Name..." name="host" [(ngModel)]="MeetingTime.host" required>
+                <!-- <input type="email" placeholder="Who will be notified when an invite is made..." name="hostemail" [(ngModel)]="MeetingTime.hostemail" required> -->
+                <!-- <button (click)="AddMeetingFormProcess(['_howoften'],['_host'])">add</button> -->
             </div>
 
             <div id="_howoften" class="display_flex_justify_n_align_center_direction_column margin-vertical">
@@ -179,7 +181,7 @@
                     <option value="4">Monthly</option>
                     <option value="5">Yearly</option>
                 </select>
-                <button (click)="AddMeetingFormProcess(['_date'],[''])">add</button>
+                <!-- <button (click)="AddMeetingFormProcess(['_date'],[''])">add</button> -->
             </div>
 
             <div id="_date" class="display_flex_justify_n_align_center_direction_column margin-vertical">
@@ -188,20 +190,20 @@
                     [(ngModel)]="MeetingTime.day">
                 <input type="text" #_date_time_ placeholder="Times held...." name="_date_time"
                     [(ngModel)]="MeetingTime.time">
-                <button (click)="AddMeetingFormProcess(['_timezone'],[''])">add</button>
+                <!-- <button (click)="AddMeetingFormProcess(['_timezone'],[''])">add</button> -->
             </div>
 
             <div id="_timezone" class="display_flex_justify_n_align_center_direction_column margin-vertical">
                 <label for="">What is this meeting's timezone?</label>
                 <input type="text" placeholder="Meeting Name Timezone..." name="timezone"
                     [(ngModel)]="MeetingTime.timezone">
-                <button (click)="AddMeetingFormProcess(['_url'],[''])">add</button>
+                <!-- <button (click)="AddMeetingFormProcess(['_url'],[''])">add</button> -->
             </div>
 
             <div id="_url" class="display_flex_justify_n_align_center_direction_column margin-vertical">
                 <label for="">Whats the meeting's url address?</label>
                 <input type="text" placeholder="Meeting Address..." name="url" [(ngModel)]="MeetingTime.url">
-                <button (click)="AddMeetingFormProcess(['_terms'],[''])">add</button>
+                <!-- <button (click)="AddMeetingFormProcess(['_terms'],[''])">add</button> -->
             </div>
 
             <div id="_terms" class="display_flex_justify_n_align_center_direction_row margin-horizontal">

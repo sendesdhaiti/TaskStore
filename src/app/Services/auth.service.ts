@@ -44,7 +44,7 @@ export class AuthService {
       email:email,
       account:account
     }
-    return this.http.put<any[]>(this.API + this.AUTH_URL_ENDPOINT + "update-account", req)
+    return this.http.put<any[]>(this.API + this.AUTH_URL_ENDPOINT + "portal/update-account", req)
   }
   verifyAccount(email:string, code: number,v_or_c:boolean) {
     // email = this.encrypt.encrypt(email)
@@ -59,7 +59,7 @@ export class AuthService {
 
   deleteAccount(email:string) {
     email = this.encrypt.encrypt(email)
-    return this.http.delete<any[]>(this.API + this.AUTH_URL_ENDPOINT + "delete-account", {params:{
+    return this.http.delete<any[]>(this.API + this.AUTH_URL_ENDPOINT + "portal/delete-account", {params:{
       email:email
     }})
   }
@@ -85,5 +85,6 @@ export class Account {
   verified?: boolean
   added?: Date
   updated?: Date
+  token?:string
 
 }

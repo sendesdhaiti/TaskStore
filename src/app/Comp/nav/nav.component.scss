@@ -1,3 +1,83 @@
-div >  * {
-    margin: 5px auto 5px auto;
+main {
+    display: grid;
+    grid-template-columns: 0.6fr 1.5fr 0.8fr 0.8fr;
+    grid-template-rows: 1fr 0.2fr;
+    grid-template-areas:
+        "about none dash cart "
+        "user user user user"
+    ;
+}
+
+img {
+    background-color: white;
+    width: 29px;
+    border-radius: 3rem;
+    padding: 5px;
+}
+
+#about {
+    background-color: white;
+    margin: auto;
+    grid-area: about;
+}
+
+#dashboard {
+    grid-area: dash;
+}
+
+#cart {
+    grid-area: cart;
+}
+#menu{
+    display: none;
+}
+#user{
+    display: flex;
+}
+@media screen and (max-width:350px) {
+    main {
+        display: grid;
+        grid-template-columns: 0.6fr 1.5fr 0.8fr;
+        grid-template-rows: 1fr 0.2fr;
+        grid-template-areas:
+            "menu menu menu  "
+            "user user user"
+        ;
+    }
+
+    img {
+        background-color: white;
+        width: 29px;
+        height: 5rem;
+        border-radius: 3rem;
+        padding: 5px;
+    }
+
+    #about {
+        display: none;
+    }
+
+    #dashboard {
+        display: none;
+    }
+
+    #cart {
+        display: none;
+    }
+    #menu{
+        display: flex;
+        grid-area: menu;
+    }
+
+    #menu{
+        display: flex;
+        grid-area: menu;
+    }
+
+    #user{
+        display: flex;
+        justify-content: center;
+        align-content: center;
+        grid-area: user;
+    }
 }

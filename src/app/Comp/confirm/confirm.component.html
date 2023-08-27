@@ -24,8 +24,10 @@
     <div id="confirm">
         <p class="display_flex_justify_n_align_center_direction_row">Please confirm that you will be attending the
             meeting at one of the times below</p>
+
         <div *ngIf="confirm == true;else notConf"
-            class="Column_to_Row_500px_width display_flex_justify_n_align_center_direction_row">
+            class="Column_to_Row_500px_width display_flex_justify_n_align_center_direction_column">
+
             <p>I am coming to the meeting:
                 <span><u>{{confirm}}</u> <input type="checkbox" name="confirm" id="" [(ngModel)]="confirm"
                         (change)="changeDate(confirm)"></span>
@@ -33,30 +35,59 @@
 
 
             <div *ngIf="$MeetingTimes | async as MeetingTimes">
-                <div *ngIf="MeetingTimes.length > 0;else noMeetingTimes">
+                <div class="display_flex_justify_n_align_center_direction_row flex-wrap">
+                    <div class="display_flex_justify_n_align_center_direction_column">
+                        <!-- Timezone -->
+                        <label> Filter by Timezone</label>
+                        <select name="tz" (change)="Filter()" [(ngModel)]="filter.frequency">
+                            <option value="{{f}}" *ngFor="let f of frequencyFilter"> {{MeetingFrequency[f]}}</option>
+                        </select>
+
+                    </div>
+
+                    <div class="display_flex_justify_n_align_center_direction_column">
+                        <!-- Host -->
+                        <label> Filter by Host</label>
+                        <select name="_host" (change)="Filter()" [(ngModel)]="filter.host">
+                            <option value="{{h}}" *ngFor="let h of hostFilter">{{h}} </option>
+                        </select>
+
+                    </div>
+                </div>
+
+                <div class="background1" *ngIf="filteredMeetingTimes.length > 0">
                     <div class="display_flex_justify_n_align_center_direction_column margin-10px padding-5px border-radius6"
-                        *ngFor="let mt of MeetingTimes">
-                        <h3>Meeting Time</h3>
+                        *ngFor="let mt of filteredMeetingTimes">
+                        <h3 style="color: yellow;">FILTERED MEETING TIME</h3>
                         <p>Meeting ID: <span><b class="word-break">{{mt.id}}</b></span></p>
                         <p>Timezone: <span><b>{{mt.timezone}}</b></span></p>
                         <p>Url: <span><b><u>{{mt.url}}</u></b></span></p>
                         <p>Host: <span><b>{{mt.host}}</b></span></p>
-                        <p>Frequency: <span><select name="frq" disabled >
+                        <p>Frequency: <span><select name="frq" disabled>
                                     <option [value]="mt.frequency">{{mt.frequency}}</option>
                                 </select></span></p>
                         <p>Scheduled Date: <span><b>{{mt.day}} {{mt.time}}</b></span></p>
                         <div class="display_flex_justify_n_align_center_direction_row flex-wrap" *ngIf="confirm">
                             <p>Add the time from one of the meetings that you can make.</p>
-                            <input #t type="datetime-local" name="date" id="" [(ngModel)]="date" (change)="updateConfirmationtime(t.value, mt)">
+                            <input #t type="datetime-local" name="date" id="" [(ngModel)]="date"
+                                (change)="updateConfirmationtime(t.value, mt)">
                         </div>
-                        <p>Date Added: <span><b>{{mt.added}}</b></span></p>
-                        <p>Date Modified: <span><b>{{mt.updated}}</b></span></p>
+                        <p>Date Added: <span><b>{{mt.added | date:'mm/dd/yyy hh:mm:ss'}}</b></span></p>
+                        <p>Date Modified: <span><b>{{mt.updated | date:'mm/dd/yyy hh:mm:ss'}}</b></span></p>
                         <p>Created By: <span><b class="word-break">{{mt.creator}}</b></span></p>
+                        <div class="display_flex_justify_n_align_center_direction_row flex-wrap">
+                            <button class="btn1 hover-fade" (click)="sendConfirmation(mt)"
+                                *ngIf="date != undefined;else noConfirmYet">Send Confirmation</button>
+                            <ng-template #noConfirmYet>
+                                <button class="btn1 hover-fade" disabled>Send Confirmation</button>
+                            </ng-template>
+                        </div>
                     </div>
                 </div>
-                <ng-template #noMeetingTimes>
+
+                <div *ngIf="MeetingTimes.length < 1">
                     <h3>There are no meeting times available.</h3>
-                </ng-template>
+                </div>
 
             </div>
 
@@ -65,12 +96,8 @@
             <p class=" display_flex_justify_n_align_center_direction_row">Not yet: <span><u>{{confirm}}</u> <input
                         type="checkbox" name="confirm" id="" [(ngModel)]="confirm"></span></p>
         </ng-template>
-        
-        <div class="display_flex_justify_n_align_center_direction_row flex-wrap">
-            <button class="display_flex_justify_n_align_center_direction_row" (click)="sendConfirmation()">Send
-                Confirmation</button>
 
-        </div>
+
     </div>
 
     <div *ngIf="response.length > 1" class="display_flex_justify_n_align_center_direction_row">

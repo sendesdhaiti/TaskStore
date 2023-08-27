@@ -29,14 +29,15 @@ export class ContactService {
     }
   }
   
-  SendEmailMeetingConfirmation(email: string,confirmation: boolean, code: number, date: string, v2_or_client:boolean) {
+  SendEmailMeetingConfirmation(email: string,confirmation: boolean, code: number, date: string, v2_or_client:boolean, time:MeetingTime) {
     
     const ret = {
       "email": email,
       "confirmation": confirmation,
       "code": code,
       "date": date, 
-      "v2_or_client":v2_or_client
+      "v2_or_client":v2_or_client,
+      "time":time
     }
 
     return this.http.put<any[]>(this.API + this.Contact_endpoint + this.ACN_INTEREST_CONFIRM_ENDPOINT, ret)
@@ -70,11 +71,15 @@ export class ContactService {
 
   AddMeetingTimes(o: _meetingTimes) {
 
-    return this.http.post<any[] | undefined>(this.API + this.Contact_endpoint + "add-meeting-time", o)
+    return this.http.post<any[]>(this.API + this.Contact_endpoint + "portal/add-meeting-time", o)
   }
 
-  GetMeetingTimes(email: string, v2_or_client_Encryption:boolean) {
+  GetMeetingTimes(email: string, v2_or_client_Encryption:boolean, get_all:string) {
+    const h = new HttpHeaders({
+      "get_all": get_all
+    })
     return this.http.get<MeetingTime[]>(this.API + this.Contact_endpoint + "get-meeting-times", {
+      headers:h,
       params: {
         encryptedUser:email,
         v2_or_client_Encryption:v2_or_client_Encryption
@@ -94,7 +99,8 @@ export class MeetingTime {
   timezone?: string
   url?: string
   host?: string
-  frequency?: MeetingFrequency
+  hostemail?:string
+  frequency: MeetingFrequency = MeetingFrequency.Daily
   day?: string
   time?: string
   added?: Date

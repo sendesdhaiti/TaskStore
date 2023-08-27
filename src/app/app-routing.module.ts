@@ -7,6 +7,8 @@ import { ConfirmComponent } from './Comp/confirm/confirm.component';
 import { AuthComponent } from './Comp/auth/auth.component';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './Comp/home/home.component';
+import { AuthGuard } from './Guards/auth.guard';
+import { MyConfirmationsComponent } from './Comp/my-confirmations/my-confirmations.component';
 
 export const general: Routes = [
   { path: "home", component: HomeComponent },
@@ -23,7 +25,7 @@ export const contact: Routes = [
   { path: "contact", component: ContactComponent },
   { path: "confirm/:user", component: ConfirmComponent },
   { path: "verify/:user/:pageType", component: ConfirmComponent },
-  {path: "meetings/:user", component: HomeComponent}
+  {path: "my-confirmations/:user", component: MyConfirmationsComponent}
 ];
 // export const confrim: Routes = [
 //   { path: "confirm/:user", component: ConfirmComponent }
@@ -34,7 +36,7 @@ export const buy: Routes = [
 ];
 
 export const sell: Routes = [
-  { path: "portal", component: SellComponent }
+  { path: "portal", component: SellComponent, canActivate: [AuthGuard] }
 ];
 
 @NgModule({

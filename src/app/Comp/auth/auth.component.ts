@@ -68,12 +68,11 @@ export class AuthComponent implements OnInit {
     }
     if (ValidateEmail(this.Account.email)) {
       const s = this.data.__login(this.Account).subscribe(x => {
-        console.log(x)
         this.data.setAccount(x[0] ?? {})
+        this.data.setStorage(x[0] ?? {})
         this.msgs.response = x[1]
         setTimeout(()=>{this.msgs.response = undefined}, this.setTimeout_Time)
       }, o => {
-        console.log(JSON.stringify(o.error[1]))
         this.data.setAccount({})
         this.msgs.response = o.error[1]
         setTimeout(()=>{this.msgs.response = undefined}, this.setTimeout_Time)
@@ -119,7 +118,6 @@ export class AuthComponent implements OnInit {
     }
     if (ValidateEmail(this.Account.email) && this.Account.password && this.Account.username) {
       const s = this.data.__register(this.Account).subscribe(x => {
-        console.log(x)
         if (x.length > 1) {
           this.data.setAccount({})
           this.msgs.saved = JSON.stringify(x[0])
@@ -132,7 +130,6 @@ export class AuthComponent implements OnInit {
           setTimeout(()=>{this.msgs.response = undefined}, this.setTimeout_Time)
         }
       }, o => {
-        console.log(o.error)
         this.data.setAccount({})
         this.msgs.saved = o.error[0]
         this.msgs.response = o.error[1]

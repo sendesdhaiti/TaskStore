@@ -12,6 +12,6 @@ export class HomeComponent implements OnInit {
   constructor(private data:DataService){}
   $MeetingTimes:Observable<MeetingTime[]> | undefined
   ngOnInit(): void {
-      this.$MeetingTimes = this.data.__getMeetingTimes("",true)
+      this.$MeetingTimes = this.data.__getMeetingTimes( this.data.encrypt.encrypt('example@gmail.com'),false, "get_all")
   }
 }
