@@ -203,6 +203,15 @@ export class SellComponent implements OnInit {
           for (let i = 0; i < this.MeetingTimes.length -1; i++) {
             this.MeetingTimes.pop()
           }
+          this.edittedAccount = {
+            email: undefined,
+            username: undefined,
+            verifiedCode: undefined,
+            password: undefined,
+            re_password: undefined
+          }
+
+          this.MeetingTimes = []
         } else {
           this.edittedAccountMsgs.uploaded = false
           this.edittedAccountMsgs.uploadedMsg = "Saving the Meeting Times did not complete successfully."
