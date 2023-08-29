@@ -1,1 +1,47 @@
-<p>my-confirmations works!</p>
+<div *ngIf="Account">
+    <p>Viewing Meeting Confirmations for {{Account.username}} </p>
+</div>
+
+<div *ngIf="MeetingConfirmations | async as mc">
+    <div *ngFor="let c of mc" class="word-break">
+        <p>
+            Confirmed to go: {{c.confirmation}}
+        </p>
+
+        <p>
+            At this date: {{c.date}}
+        </p>
+
+        <p >
+            Using this email: {{c.email}}
+        </p>
+
+        <div *ngIf="c.time">
+            <h3>Meeting Time Scheduled</h3>
+            <p>
+                Meeting Time Zone {{c.time.timezone}}
+            </p>
+
+            <p>
+                Meeting Link {{c.time.url}}
+            </p>
+
+            <p>
+                Meeting Host {{c.time.host}}
+            </p>
+
+            <p>
+                Meeting Frequency {{c.time.frequency}}
+            </p>
+
+            <p>
+                Meeting Days {{c.time.day}}
+            </p>
+
+            <p>
+                Meeting Times {{c.time.time}}
+            </p>
+
+        </div>
+    </div>
+</div>

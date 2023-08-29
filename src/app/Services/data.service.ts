@@ -34,7 +34,14 @@ export class DataService {
   MeetingTimes: BehaviorSubject<MeetingTime[]>
   Auth: BehaviorSubject<Auth>
   _isUserAuthenticated: BehaviorSubject<boolean>
-
+  getRouteParam(s: string | undefined) {
+    if (s) {
+      var _s = s.split(":")[1]
+      return _s
+    } else {
+      return "user"
+    }
+  }
   isUserAuthenticated = (): boolean => {
     let a = this.Account.value
     if(a){
@@ -64,8 +71,8 @@ export class DataService {
 
   GETSTORAGE() {
     let a = this.Account.value
-    if (!a) {
-      let s = sessionStorage.getItem(this.#storageStr)
+    let s = sessionStorage.getItem(this.#storageStr)
+    if (!a  && s) {
       let t = JSON.parse(s ?? "")
       this.setStorage(t.Account, t.MeetingTimes)
       this.Account.next(this.Storage.value.Account)
@@ -158,26 +165,22 @@ export class DataService {
   __addMeetingTimes(o: _meetingTimes) {
     return this.contact.AddMeetingTimes(o)
   }
+
+  __updateMeetingTimes(o: _meetingTimes) {
+    return this.contact.UpdateMeetingTimes(o)
+  }
+
+  __getMeetingConfirmations(email: string, v2_or_client_Encryption:boolean){
+    return this.contact.GetMeetingConfirmations(email,v2_or_client_Encryption)
+  }
   __newCode(email: string, v2_or_client: boolean) {
     return this.contact.newCode(email, v2_or_client)
   }
 
   __getMeetingTimes(email: string, v2_or_client_Encryption: boolean, get_all:string) {
     return this.contact.GetMeetingTimes(email, v2_or_client_Encryption, get_all)
-    // .pipe(map(x=>{
-    //   let o =[]
-    //   this.setStorage(undefined,x)
-    //   for(let i = 0; i < x.length - 1; i++){
-    //     if(x[i].frequency?.valueOf() == 0){
-    //       o.push(x[i])
-    //     }
-    //   }
-    //   if(o.length > 0){
-    //     return o
-    //   }
-    //   return x
-    // }))
   }
+  
 
 
 }

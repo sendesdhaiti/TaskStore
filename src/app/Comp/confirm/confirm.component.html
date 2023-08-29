@@ -21,14 +21,14 @@
         </p>
     </div>
 
-    <div id="confirm">
+    <div id="confirm" class="display_flex_justify_n_align_center_direction_column">
         <p class="display_flex_justify_n_align_center_direction_row">Please confirm that you will be attending the
             meeting at one of the times below</p>
 
         <div *ngIf="confirm == true;else notConf"
-            class="Column_to_Row_500px_width display_flex_justify_n_align_center_direction_column">
+            class=" margin-10px display_flex_justify_n_align_center_direction_column">
 
-            <p>I am coming to the meeting:
+            <p class="display_flex_justify_n_align_center_direction_row">I am coming to the meeting:
                 <span><u>{{confirm}}</u> <input type="checkbox" name="confirm" id="" [(ngModel)]="confirm"
                         (change)="changeDate(confirm)"></span>
             </p>
@@ -40,9 +40,8 @@
                         <!-- Timezone -->
                         <label> Filter by Timezone</label>
                         <select name="tz" (change)="Filter()" [(ngModel)]="filter.frequency">
-                            <option value="{{f}}" *ngFor="let f of frequencyFilter"> {{MeetingFrequency[f]}}</option>
+                            <option [value]="f" *ngFor="let f of frequencyFilter"> {{f}}</option>
                         </select>
-
                     </div>
 
                     <div class="display_flex_justify_n_align_center_direction_column">
@@ -77,9 +76,9 @@
                         <p>Created By: <span><b class="word-break">{{mt.creator}}</b></span></p>
                         <div class="display_flex_justify_n_align_center_direction_row flex-wrap">
                             <button class="btn1 hover-fade" (click)="sendConfirmation(mt)"
-                                *ngIf="date != undefined;else noConfirmYet">Send Confirmation</button>
+                                *ngIf="date != undefined && code != undefined;else noConfirmYet">Send Confirmation</button>
                             <ng-template #noConfirmYet>
-                                <button class="btn1 hover-fade" disabled>Send Confirmation</button>
+                                <button class="btn1 hover-fade " style="background-color: red;" (click)="sendConfirmation(mt)">Send Confirmation</button>
                             </ng-template>
                         </div>
                     </div>
