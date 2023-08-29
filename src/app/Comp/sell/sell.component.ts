@@ -45,6 +45,9 @@ export class SellComponent implements OnInit {
     uploaded: undefined,
     uploadedMsg: undefined
   }
+  edittedMeetingTimeMsgs: any = {
+    updatedMsg: undefined
+  }
   newMeetingFormSections = []
 
   __deleteAccount() {
@@ -187,9 +190,36 @@ export class SellComponent implements OnInit {
           this.msgs.addMeetingTime = `${this.MeetingTime.day} at ${this.MeetingTime.time} was added already.`
         } else {
           this.MeetingTimes.push(this.MeetingTime)
-          this.MeetingTime = {frequency:MeetingFrequency.Daily}
+          this.MeetingTime = { frequency: MeetingFrequency.Daily }
         }
       }
+    }
+  }
+  hideEditTimes = true
+  toggleMeetingTimeEdit(){
+    if(this.hideEditTimes){
+      this.hideEditTimes = false
+    }else{
+      this.hideEditTimes = true
+    }
+  }
+  updateMeetingTime() {
+    console.log(this.MeetingTime)
+    var email = this.data.encrypt.encrypt(this.Account?.email ?? "")
+    const c = this.data.__updateMeetingTimes({ email: email, times: [this.MeetingTime] }).subscribe({
+      next: x => {
+        this.edittedMeetingTimeMsgs.updatedMsg = x[1]
+      },
+      error: x => {
+        this.edittedMeetingTimeMsgs.updatedMsg = "an error occur while updating the meeting time"
+      }
+    })
+    if (c) {
+      setTimeout(() => {
+        this.MeetingTime = {frequency:0}
+        c.unsubscribe()
+        this.edittedMeetingTimeMsgs.updatedMsg = undefined
+      }, 2000)
     }
   }
 
@@ -200,7 +230,7 @@ export class SellComponent implements OnInit {
         if (x) {
           this.edittedAccountMsgs.uploaded = x[0]
           this.edittedAccountMsgs.uploadedMsg = x[1]
-          for (let i = 0; i < this.MeetingTimes.length -1; i++) {
+          for (let i = 0; i < this.MeetingTimes.length - 1; i++) {
             this.MeetingTimes.pop()
           }
           this.edittedAccount = {
@@ -225,12 +255,13 @@ export class SellComponent implements OnInit {
         setTimeout(() => {
           c.unsubscribe()
           if (this.edittedAccountMsgs.uploaded == true) {
-            this.MyMeetingTimes = this.data.__getMeetingTimes(email, false,"" )
+            this.MyMeetingTimes = this.data.__getMeetingTimes(email, false, "")
           }
 
           setTimeout(() => {
             this.edittedAccountMsgs.uploaded = undefined
             this.edittedAccountMsgs.uploadedMsg = undefined
+            this.msgs.terms = false
           }, 5000)
         }, 2000)
       }

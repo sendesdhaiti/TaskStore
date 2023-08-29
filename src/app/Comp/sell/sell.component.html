@@ -77,28 +77,89 @@
 
     </div>
 
-    <div class="display_flex_justify_n_align_center_direction_row flex-wrap ">
+    <div class="display_flex_justify_n_align_center_direction_column flex-wrap ">
         <!-- my meeting times made -->
         <div *ngIf="MyMeetingTimes | async as mytimes">
             <div *ngIf="mytimes;else nomytimes">
                 <div class="display_flex_justify_n_align_center_direction_column margin-10px padding-5px border-radius6"
                     *ngFor="let mt of mytimes">
                     <p>Meeting ID: <span><b class="word-break">{{mt.id}}</b></span></p>
-                    <p>Timezone: <span><b>{{mt.timezone}}</b></span></p>
-                    <p>Url: <span><b><u>{{mt.url}}</u></b></span></p>
-                    <p>Host: <span><b>{{mt.host}}</b></span></p>
-                    <p>Frequency: <span><select name="" disabled [(ngModel)]="mt.frequency">
+                    <p>Timezone: <span>
+                            <b *ngIf="hideEditTimes;else noTz">{{mt.timezone}}</b>
+                            <ng-template #noTz>
+                                <input placeholder="Enter new meeting timezone" type="text" value="" name="tz"
+                                    [(ngModel)]="MeetingTime.timezone">
+                            </ng-template>
+                        </span></p>
+                    <p>Url: <span>
+                            <b *ngIf="hideEditTimes;else noUrl"><u>{{mt.url}}</u></b>
+                            <ng-template #noUrl>
+                                <input placeholder="Enter new meeting video link for presentation" type="text" value=""
+                                    name="url" [(ngModel)]="MeetingTime.url">
+                            </ng-template>
+                        </span></p>
+                    <p>Host: <span class="display_flex_justify_n_align_center_direction_column">
+                            <b *ngIf="hideEditTimes;else noHost">{{mt.host}}</b>
+                            <ng-template #noHost class="display_flex_justify_n_align_center_direction_column">
+                                <label for="">Enter New Host Name</label>
+                                <input placeholder="Enter new host for this presentation" type="text" value=""
+                                    name="host" [(ngModel)]="MeetingTime.host">
+                                <label for="">Enter Host Notification Email</label>
+                                <input placeholder="Enter the host email to be notified when invite is made"
+                                    type="email" value="" name="hostemail" [(ngModel)]="MeetingTime.hostemail">
+                            </ng-template>
+                        </span></p>
+                    <p>Frequency: <span>
+                            <select name="" disabled [(ngModel)]="mt.frequency" *ngIf="hideEditTimes;else noFreq">
                                 <option value="0">One Time</option>
                                 <option value="1">Daily</option>
                                 <option value="2">Weekly</option>
                                 <option value="3">Bi-Weekly</option>
                                 <option value="4">Monthly</option>
                                 <option value="5">Yearly</option>
-                            </select></span></p>
-                    <p>Scheduled Date: <span><b>{{mt.day}} {{mt.time}}</b></span></p>
+                            </select>
+                            <ng-template #noFreq>
+                                <label for="">How frequent will this meeting be held?</label>
+                                <select name="freq" [(ngModel)]="MeetingTime.frequency">
+                                    <option value="0">One Time</option>
+                                    <option value="1">Daily</option>
+                                    <option value="2">Weekly</option>
+                                    <option value="3">Bi-Weekly</option>
+                                    <option value="4">Monthly</option>
+                                    <option value="5">Yearly</option>
+                                </select>
+                            </ng-template>
+                        </span></p>
+                    <p>Scheduled Date: <span>
+                            <b *ngIf="hideEditTimes;else noDate">{{mt.day}} {{mt.time}}</b>
+                            <ng-template #noDate>
+                                <div id="_date"
+                                    class="display_flex_justify_n_align_center_direction_column margin-vertical">
+                                    <label for="">When is the meeting held?</label>
+                                    <input type="text" #_date_day_ id="" placeholder="Days...." name="_date_day"
+                                        [(ngModel)]="MeetingTime.day">
+                                    <input type="text" #_date_time_ placeholder="Times held...." name="_date_time"
+                                        [(ngModel)]="MeetingTime.time">
+                                    <!-- <button (click)="AddMeetingFormProcess(['_timezone'],[''])">add</button> -->
+                                </div>
+
+                                <div id="_timezone"
+                                    class="display_flex_justify_n_align_center_direction_column margin-vertical">
+                                    <label for="">What is this meeting's timezone?</label>
+                                    <input type="text" placeholder="Meeting Name Timezone..." name="timezone"
+                                        [(ngModel)]="MeetingTime.timezone">
+                                    <!-- <button (click)="AddMeetingFormProcess(['_url'],[''])">add</button> -->
+                                </div>
+                            </ng-template>
+                        </span></p>
                     <p>Date Added: <span><b>{{mt.added | date: 'MMM d, y, h:mm:ss a'}}</b></span></p>
                     <p>Date Modified: <span><b>{{mt.updated | date: 'MMM d, y, h:mm:ss a'}}</b></span></p>
                     <p>Created By: <span><b class="word-break">{{mt.creator}}</b></span></p>
+                    <button class="btn1 hover-fade" (click)="toggleMeetingTimeEdit()"
+                        *ngIf="hideEditTimes;else noUpdate">Edit</button>
+                    <ng-template #noUpdate>
+                        <button class="btn1 hover-fade" (click)="updateMeetingTime()">Update</button>
+                    </ng-template>
                 </div>
 
 
@@ -111,7 +172,7 @@
         <div *ngIf="MeetingTimes.length > 0;else noMeetingTimes">
             <div class="display_flex_justify_n_align_center_direction_column margin-10px padding-5px border-radius6"
                 *ngFor="let mt of MeetingTimes">
-                <h3>Meeting Ready To Upload</h3>
+                <h3 style="color: yellow;">Meeting Ready To Upload</h3>
                 <p>Meeting ID: <span><b class="word-break">{{mt.id}}</b></span></p>
                 <p>Timezone: <span><b>{{mt.timezone}}</b></span></p>
                 <p>Url: <span><b><u>{{mt.url}}</u></b></span></p>
@@ -167,7 +228,9 @@
             <div id="_host" class="display_flex_justify_n_align_center_direction_column margin-vertical">
                 <label for="">Who will host this meeting?</label>
                 <input type="text" placeholder="Host Name..." name="host" [(ngModel)]="MeetingTime.host" required>
-                <!-- <input type="email" placeholder="Who will be notified when an invite is made..." name="hostemail" [(ngModel)]="MeetingTime.hostemail" required> -->
+                <label for="">What is this host's notification email</label>
+                <input type="email" placeholder="Who will be notified when an invite is made..." name="hostemail"
+                    [(ngModel)]="MeetingTime.hostemail" required>
                 <!-- <button (click)="AddMeetingFormProcess(['_howoften'],['_host'])">add</button> -->
             </div>
 
@@ -224,8 +287,8 @@
         </form>
     </div>
 
-    <div>
-        <Button (click)="__deleteAccount()">Delete My Account</Button>
+    <div class="margin-10px">
+        <Button class="btn1 hover-fade" (click)="__deleteAccount()">Delete My Account</Button>
 
     </div>
 

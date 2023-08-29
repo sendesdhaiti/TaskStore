@@ -96,14 +96,7 @@ export class ConfirmComponent implements OnInit {
   }
 
 
-  getUser(s: string | undefined) {
-    if (s) {
-      var _s = s.split(":")[1]
-      return _s
-    } else {
-      return "user"
-    }
-  }
+  
   newCode() {
     let a = this.data.Account.value
     if (a) {
@@ -124,8 +117,15 @@ export class ConfirmComponent implements OnInit {
   }
 
   updateConfirmationtime(time: any, mt: MeetingTime) {
-    this.newDate = time + " for " + mt.host + " at " + mt.url
-
+    let t:any
+    try {
+      t = new Date(time)
+      // t = d.toLocaleDateString() + " " + d.toLocaleTimeString()
+      console.log(t)
+    } catch (error) {
+      
+    }
+    this.newDate = t + " for " + mt.host + " at " + mt.url
   }
 
 
@@ -234,6 +234,18 @@ export class ConfirmComponent implements OnInit {
     if (this.newDate) {
       this.date = this.newDate
     }
+
+    if(!this.code){
+      this.response = [false, "You must first enter the verification code before confirming a time."]
+      setTimeout(()=>{
+        this.response = []
+      }, 2000)
+      return
+
+    }
+    
+    
+    
     let a: Account | undefined = this.data.GETACCOUNT_VAL()
     if (a) {
       email_ = this.data.encrypt.encrypt(a.email)
@@ -276,7 +288,7 @@ export class ConfirmComponent implements OnInit {
         email_ = a.email
       } else {
         // email_ = this.getUser(params['user'])
-        this.email = this.getUser(params['user'])
+        this.email = this.data.getRouteParam(params['user'])
 
       }
       if (params['pageType'] == "verify") {

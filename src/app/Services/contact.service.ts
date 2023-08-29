@@ -74,12 +74,26 @@ export class ContactService {
     return this.http.post<any[]>(this.API + this.Contact_endpoint + "portal/add-meeting-time", o)
   }
 
+  UpdateMeetingTimes(o: _meetingTimes) {
+
+    return this.http.put<any[]>(this.API + this.Contact_endpoint + "portal/update-meeting-time", o)
+  }
+
   GetMeetingTimes(email: string, v2_or_client_Encryption:boolean, get_all:string) {
     const h = new HttpHeaders({
       "get_all": get_all
     })
     return this.http.get<MeetingTime[]>(this.API + this.Contact_endpoint + "get-meeting-times", {
       headers:h,
+      params: {
+        encryptedUser:email,
+        v2_or_client_Encryption:v2_or_client_Encryption
+      }
+    })
+  }
+
+  GetMeetingConfirmations(email: string, v2_or_client_Encryption:boolean) {
+    return this.http.get<MeetingConfirmation[]>(this.API + this.Contact_endpoint + "portal/get-email-confirmations", {
       params: {
         encryptedUser:email,
         v2_or_client_Encryption:v2_or_client_Encryption
@@ -117,3 +131,15 @@ export enum MeetingFrequency {
   Yearly
 
 }
+export class MeetingConfirmation
+    {
+        id?:string
+        code?:number
+        confirmation?:boolean
+        date?:string
+        added?:Date
+        updated?:Date
+        email?:string
+        v2_or_client?:boolean
+        time?:MeetingTime
+    }
